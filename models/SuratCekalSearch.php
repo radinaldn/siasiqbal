@@ -18,8 +18,8 @@ class SuratCekalSearch extends SuratCekal
     public function rules()
     {
         return [
-            [['id_surat_cekal', 'asal', 'nama', 'jk', 'tempat_lahir', 'tanggal_lahir', 'status', 'pekerjaan', 'alamat', 'tanggal_mulai_cekal'], 'safe'],
-            [['foto', 'no_ktp', 'no_passport', 'surat_permohonan_cekal_no_tgl', 'keputusan_kerja_kepja'], 'integer'],
+            [['id_surat_cekal', 'asal', 'nama', 'jk', 'tempat_lahir', 'tanggal_lahir', 'foto', 'status', 'pekerjaan', 'alamat', 'keputusan_kerja_kepja', 'tanggal_mulai_cekal'], 'safe'],
+            [['no_ktp', 'no_passport', 'surat_permohonan_cekal_no_tgl'], 'integer'],
         ];
     }
 
@@ -60,11 +60,9 @@ class SuratCekalSearch extends SuratCekal
         // grid filtering conditions
         $query->andFilterWhere([
             'tanggal_lahir' => $this->tanggal_lahir,
-            'foto' => $this->foto,
             'no_ktp' => $this->no_ktp,
             'no_passport' => $this->no_passport,
             'surat_permohonan_cekal_no_tgl' => $this->surat_permohonan_cekal_no_tgl,
-            'keputusan_kerja_kepja' => $this->keputusan_kerja_kepja,
             'tanggal_mulai_cekal' => $this->tanggal_mulai_cekal,
         ]);
 
@@ -73,9 +71,11 @@ class SuratCekalSearch extends SuratCekal
             ->andFilterWhere(['like', 'nama', $this->nama])
             ->andFilterWhere(['like', 'jk', $this->jk])
             ->andFilterWhere(['like', 'tempat_lahir', $this->tempat_lahir])
+            ->andFilterWhere(['like', 'foto', $this->foto])
             ->andFilterWhere(['like', 'status', $this->status])
             ->andFilterWhere(['like', 'pekerjaan', $this->pekerjaan])
-            ->andFilterWhere(['like', 'alamat', $this->alamat]);
+            ->andFilterWhere(['like', 'alamat', $this->alamat])
+            ->andFilterWhere(['like', 'keputusan_kerja_kepja', $this->keputusan_kerja_kepja]);
 
         return $dataProvider;
     }

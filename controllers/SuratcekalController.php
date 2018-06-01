@@ -5,9 +5,11 @@ namespace app\controllers;
 use Yii;
 use app\models\SuratCekal;
 use app\models\SuratCekalSearch;
+use yii\db\Exception;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * SuratcekalController implements the CRUD actions for SuratCekal model.
@@ -24,6 +26,18 @@ class SuratcekalController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'only' => ['index','create','update','view'],
+                'rules' => [
+                    // allow authenticated users
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    // everything else is denied
                 ],
             ],
         ];
@@ -66,13 +80,33 @@ class SuratcekalController extends Controller
     {
         $model = new SuratCekal();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_surat_cekal]);
+        if ($model->load(Yii::$app->request->post())) {
+
+            try {
+                $picture = UploadedFile::getInstance($model, 'foto');
+                $model->foto = $_POST['SuratCekal']['id_surat_cekal'] . '.' . $picture->extension;
+
+                if ($model->save()) {
+                    $picture->saveAs('files/images/' . $model->id_surat_cekal . '.' . $picture->extension);
+                    Yii::$app->getSession()->setFlash('success', 'Data saved!');
+                    return $this->redirect(['view', 'id' => $model->id_surat_cekal]);
+                } else {
+                    Yii::$app->getSession()->setFlash("error", 'Data not saved!');
+                    return $this->render('create', [
+                        'model' => $model,
+                    ]);
+                }
+            } catch (Exception $e) {
+                Yii::$app->getSession()->setFlash('error', "{$e->getMessage()}");
+            }
+
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+            ]);
         }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+
     }
 
     /**
@@ -86,13 +120,27 @@ class SuratcekalController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_surat_cekal]);
+        if (isset($_POST['SuratCekal'])){
+            $picture = UploadedFile::getInstance($model, 'foto');
+            $_POST['SuratCekal']['foto'] = $model->id_surat_cekal.'.'.$picture->extension;
+
+            $model->attributes = $_POST['SuratCekal'];
+
+            if($model->save()){
+                if(!empty($picture)){
+                    $picture->saveAs('files/images/'. $model->id_surat_cekal.'.'.$picture->extension);
+                }
+                return $this->redirect(['view', 'id' => $model->id_surat_cekal]);
+            }
         }
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        else {
+            return $this->render('update', [
+
+                'model' => $model,
+            ]);
+        }
+
     }
 
     /**

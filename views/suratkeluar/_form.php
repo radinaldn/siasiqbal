@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id_surat_keluar')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'tanggal')->textInput() ?>
+    <?= $form->field($model, 'tanggal')->textInput(['type'=>'date']) ?>
 
     <?= $form->field($model, 'perihal')->textInput(['maxlength' => true]) ?>
 

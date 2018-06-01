@@ -60,63 +60,7 @@ CustomAsset::register($this);
                 <!-- Right navbar links -->
                 <ul class="navbar-nav ml-auto">
                     <!-- Messages Dropdown Menu -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" data-toggle="dropdown" href="#">
-                            <i class="fa fa-comments-o"></i>
-                            <span class="badge badge-danger navbar-badge">3</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                            <a href="#" class="dropdown-item">
-                                <!-- Message Start -->
-                                <div class="media">
-                                    <img src="<?= Yii::$app->getHomeUrl()?>custom/dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
-                                    <div class="media-body">
-                                        <h3 class="dropdown-item-title">
-                                            Brad Diesel
-                                            <span class="float-right text-sm text-danger"><i class="fa fa-star"></i></span>
-                                        </h3>
-                                        <p class="text-sm">Call me whenever you can...</p>
-                                        <p class="text-sm text-muted"><i class="fa fa-clock-o mr-1"></i> 4 Hours Ago</p>
-                                    </div>
-                                </div>
-                                <!-- Message End -->
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
-                                <!-- Message Start -->
-                                <div class="media">
-                                    <img src="../../dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-                                    <div class="media-body">
-                                        <h3 class="dropdown-item-title">
-                                            John Pierce
-                                            <span class="float-right text-sm text-muted"><i class="fa fa-star"></i></span>
-                                        </h3>
-                                        <p class="text-sm">I got your message bro</p>
-                                        <p class="text-sm text-muted"><i class="fa fa-clock-o mr-1"></i> 4 Hours Ago</p>
-                                    </div>
-                                </div>
-                                <!-- Message End -->
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
-                                <!-- Message Start -->
-                                <div class="media">
-                                    <img src="../../dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-                                    <div class="media-body">
-                                        <h3 class="dropdown-item-title">
-                                            Nora Silvester
-                                            <span class="float-right text-sm text-warning"><i class="fa fa-star"></i></span>
-                                        </h3>
-                                        <p class="text-sm">The subject goes here</p>
-                                        <p class="text-sm text-muted"><i class="fa fa-clock-o mr-1"></i> 4 Hours Ago</p>
-                                    </div>
-                                </div>
-                                <!-- Message End -->
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-                        </div>
-                    </li>
+
                     <!-- Notifications Dropdown Menu -->
                     <li class="nav-item dropdown">
                         <a class="nav-link" data-toggle="dropdown" href="#">
@@ -145,8 +89,8 @@ CustomAsset::register($this);
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">
-                            <i class="fa fa-th-large"></i>
+                        <a title="Keluar" class="nav-link" href="<?= Url::to(['site/logout']) ?>">
+                            <i class="fa fa-power-off"></i> Keluar
                         </a>
                     </li>
                 </ul>
@@ -155,14 +99,14 @@ CustomAsset::register($this);
 
             <!-- Main Sidebar Container -->
             <aside class="main-sidebar sidebar-dark-primary elevation-4">
-                <!-- Brand Logo -->
-<!--                <a href="../../index3.html" class="brand-link">-->
-<!--                    <img src="--><?php //echo Yii::$app->getHomeUrl()?><!--custom/dist/img/AdminLTELogo.png"-->
-<!--                         alt="AdminLTE Logo"-->
-<!--                         class="brand-image img-circle elevation-3"-->
-<!--                         style="opacity: .8">-->
-<!--                    <span class="brand-text font-weight-light">AdminLTE 3</span>-->
-<!--                </a>-->
+                 Brand Logo
+                <a href="../../index3.html" class="brand-link">
+                    <img src="<?php echo Yii::$app->getHomeUrl()?>custom/dist/img/AdminLTELogo.png"
+                         alt="Logo"
+                         class="brand-image img-circle elevation-3"
+                         style="opacity: .8">
+                    <span class="brand-text font-weight-light">Siasy Iqbal</span>
+                </a>
 
                 <!-- Sidebar -->
                 <div class="sidebar">
@@ -172,7 +116,7 @@ CustomAsset::register($this);
                             <img src="<?= Yii::$app->getHomeUrl()?>custom/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                         </div>
                         <div class="info">
-                            <a href="#" class="d-block">Iqbal Mardhotillah</a>
+                            <a href="#" class="d-block"><?= Yii::$app->user->identity->nama ?></a>
                         </div>
                     </div>
 
@@ -241,7 +185,7 @@ CustomAsset::register($this);
 
                             <li class="nav-header">LAINNYA</li>
                             <li class="nav-item has-treeview">
-                                <a href="<?= Url::to(['pengguna/index']) ?>" class="nav-link">
+                                <a href="<?= Url::to(['user/index']) ?>" class="nav-link">
                                     <i class="nav-icon fa fa-user"></i>
                                     <p>
                                         Pengguna

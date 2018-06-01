@@ -13,14 +13,14 @@ use Yii;
  * @property string $jk
  * @property string $tempat_lahir
  * @property string $tanggal_lahir
- * @property int $foto
+ * @property string $foto
  * @property string $status
  * @property string $pekerjaan
  * @property string $alamat
  * @property int $no_ktp
  * @property int $no_passport
  * @property int $surat_permohonan_cekal_no_tgl
- * @property int $keputusan_kerja_kepja
+ * @property string $keputusan_kerja_kepja
  * @property string $tanggal_mulai_cekal
  */
 class SuratCekal extends \yii\db\ActiveRecord
@@ -40,12 +40,13 @@ class SuratCekal extends \yii\db\ActiveRecord
     {
         return [
             [['id_surat_cekal', 'asal', 'nama', 'jk', 'tempat_lahir', 'tanggal_lahir', 'foto', 'status', 'pekerjaan', 'alamat', 'no_ktp', 'no_passport', 'surat_permohonan_cekal_no_tgl', 'keputusan_kerja_kepja', 'tanggal_mulai_cekal'], 'required'],
-            [['asal', 'status'], 'string'],
+            [['asal', 'jk', 'status'], 'string'],
             [['tanggal_lahir', 'tanggal_mulai_cekal'], 'safe'],
             [['no_ktp', 'no_passport', 'surat_permohonan_cekal_no_tgl'], 'integer'],
-            [['foto', 'keputusan_kerja_kepja', 'id_surat_cekal', 'nama', 'alamat'], 'string', 'max' => 150],
-            [['jk'], 'string', 'max' => 1],
+            [['id_surat_cekal', 'nama', 'alamat'], 'string', 'max' => 150],
             [['tempat_lahir', 'pekerjaan'], 'string', 'max' => 100],
+            [['keputusan_kerja_kepja'], 'string', 'max' => 200],
+            [['foto'], 'file', 'extensions' => 'jpg, jpeg, png', 'maxSize'=>1024*1024*1,'on' => 'create'],
             [['id_surat_cekal'], 'unique'],
         ];
     }
@@ -56,7 +57,7 @@ class SuratCekal extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_surat_cekal' => 'Nomor Surat Cekal',
+            'id_surat_cekal' => 'Id Surat Cekal',
             'asal' => 'Asal',
             'nama' => 'Nama',
             'jk' => 'Jk',

@@ -34,7 +34,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'jk',
             'tempat_lahir',
             'tanggal_lahir',
-            'foto',
+            [
+                'attribute' => 'img',
+                'format' => 'html',
+                'label' => 'Foto',
+                'value' => function ($data) {
+                    return Html::img(Yii::$app->getHomeUrl().'files/images/' . $data['foto'],
+                        ['width' => '300px']);
+                },
+            ],
             'status',
             'pekerjaan',
             'alamat',

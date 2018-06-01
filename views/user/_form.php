@@ -20,7 +20,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nama')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'jenis_kelamin')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'jenis_kelamin')->dropDownList([ 'Laki-Laki' => 'Laki-Laki', 'Perempuan' => 'Perempuan', ], ['prompt' => '']) ?>
 
     <?= $form->field($model, 'alamat')->textarea(['rows' => 6]) ?>
 

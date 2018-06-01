@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\widgets\ActiveForm;;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\SuratMasuk */
@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'perihal')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'tanggal')->textInput() ?>
+    <?= $form->field($model, 'tanggal')->textInput(['type'=>'date']) ?>
 
     <?= $form->field($model, 'dari')->dropDownList([ 'Kejagung' => 'Kejagung', 'Kejari' => 'Kejari', 'Instansi Lain' => 'Instansi Lain', ], ['prompt' => '']) ?>
 

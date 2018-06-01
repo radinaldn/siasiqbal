@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+
 /* @var $this yii\web\View */
 /* @var $model app\models\SuratCekal */
 /* @var $form yii\widgets\ActiveForm */
@@ -10,7 +11,9 @@ use yii\widgets\ActiveForm;
 
 <div class="surat-cekal-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+            'options' => ['enctype' => 'multipart/form-data']
+    ]); ?>
 
     <?= $form->field($model, 'id_surat_cekal')->textInput(['maxlength' => true]) ?>
 
@@ -18,13 +21,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nama')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'jk')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'jk')->dropDownList([ 'Laki-Laki' => 'Laki-Laki', 'Perempuan' => 'Perempuan', ], ['prompt' => '']) ?>
 
     <?= $form->field($model, 'tempat_lahir')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'tanggal_lahir')->textInput() ?>
+    <?= $form->field($model, 'tanggal_lahir')->textInput(['type'=>'date']) ?>
 
-    <?= $form->field($model, 'foto')->textInput() ?>
+    <?= $form->field($model, 'foto')->fileInput()->label('Foto') ?>
 
     <?= $form->field($model, 'status')->dropDownList([ 'Cekal' => 'Cekal', 'Diperpanjang' => 'Diperpanjang', ], ['prompt' => '']) ?>
 
@@ -38,9 +41,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'surat_permohonan_cekal_no_tgl')->textInput() ?>
 
-    <?= $form->field($model, 'keputusan_kerja_kepja')->textInput() ?>
+    <?= $form->field($model, 'keputusan_kerja_kepja')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'tanggal_mulai_cekal')->textInput() ?>
+    <?= $form->field($model, 'tanggal_mulai_cekal')->textInput(['type'=>'date']) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
