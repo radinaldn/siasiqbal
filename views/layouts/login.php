@@ -1,7 +1,36 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: radinaldn
- * Date: 01/06/18
- * Time: 11:30
- */
+
+/* @var $this \yii\web\View */
+/* @var $content string */
+
+use yii\helpers\Url;
+use app\widgets\Alert;
+use yii\helpers\Html;
+use yii\bootstrap\Nav;
+use yii\bootstrap\NavBar;
+use yii\widgets\Breadcrumbs;
+use app\assets\CustomAsset;
+
+CustomAsset::register($this);
+?>
+<?php $this->beginPage() ?>
+    <!DOCTYPE html>
+<html lang="<?= Yii::$app->language ?>">
+    <head>
+
+        <meta charset="<?= Yii::$app->charset ?>">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <?= Html::csrfMetaTags() ?>
+        <title><?= Html::encode($this->title) ?></title>
+        <?php $this->head() ?>
+    </head>
+    <body class="hold-transition login-page">
+<?php $this->beginBody() ?>
+
+    <?= $content ?>
+
+<?php $this->endBody() ?>
+    </body>
+</html>
+<?php $this->endPage() ?>

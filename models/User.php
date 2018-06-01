@@ -2,103 +2,185 @@
 
 namespace app\models;
 
-class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
+use yii\db\ActiveRecord;
+use yii\web\IdentityInterface;
+
+/**
+ * This is the model class for table "tb_user".
+ *
+ * @property int $nip
+ * @property string $password
+ * @property string $kategori
+ * @property string $nama
+ * @property string $jenis_kelamin
+ * @property string $alamat
+ * @property string $email
+ * @property string $hp
+ * @property string $authKey
+ * @property string $accessToken
+ * @property string $role
+ */
+class User extends ActiveRecord implements IdentityInterface
 {
-    public $id;
-    public $username;
-    public $password;
-    public $authKey;
-    public $accessToken;
-
-    private static $users = [
-        '100' => [
-            'id' => '100',
-            'username' => 'admin',
-            'password' => 'admin',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ],
-        '101' => [
-            'id' => '101',
-            'username' => 'demo',
-            'password' => 'demo',
-            'authKey' => 'test101key',
-            'accessToken' => '101-token',
-        ],
-    ];
-
-
     /**
      * {@inheritdoc}
      */
-    public static function findIdentity($id)
+    public static function tableName()
     {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        return 'tb_user';
     }
 
     /**
      * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            [['nip', 'password', 'kategori', 'nama', 'jenis_kelamin', 'alamat', 'email', 'hp', 'authKey', 'accessToken', 'role'], 'required'],
+            [['nip'], 'integer'],
+            [['kategori', 'alamat'], 'string'],
+            [['password', 'nama'], 'string', 'max' => 255],
+            [['jenis_kelamin'], 'string', 'max' => 2],
+            [['email'], 'string', 'max' => 100],
+            [['hp'], 'string', 'max' => 15],
+            [['authKey', 'accessToken'], 'string', 'max' => 50],
+            [['role'], 'string', 'max' => 10],
+            [['nip'], 'unique'],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'nip' => 'Nip',
+            'password' => 'Password',
+            'kategori' => 'Kategori',
+            'nama' => 'Nama',
+            'jenis_kelamin' => 'Jenis Kelamin',
+            'alamat' => 'Alamat',
+            'email' => 'Email',
+            'hp' => 'Hp',
+            'authKey' => 'Auth Key',
+            'accessToken' => 'Access Token',
+            'role' => 'Role',
+        ];
+    }
+
+    public function validatePassword($password){
+        return $this->password === $password;
+    }
+
+
+    /**
+     * Finds an identity by the given ID.
+     * @param string|int $id the ID to be looked for
+     * @return IdentityInterface the identity object that matches the given ID.
+     * Null should be returned if such an identity cannot be found
+     * or the identity is not in an active state (disabled, deleted, etc.)
+     */
+    public static function findIdentity($nip)
+    {
+        // TODO: Implement findIdentity() method.
+        $user = User::findOne($nip);
+        if(count($user)){
+            return new static($user);
+        }
+        return null;
+    }
+
+    /**
+     * Finds an identity by the given token.
+     * @param mixed $token the token to be looked for
+     * @param mixed $type the type of the token. The value of this parameter depends on the implementation.
+     * For example, [[\yii\filters\auth\HttpBearerAuth]] will set this parameter to be `yii\filters\auth\HttpBearerAuth`.
+     * @return IdentityInterface the identity object that matches the given token.
+     * Null should be returned if such an identity cannot be found
+     * or the identity is not in an active state (disabled, deleted, etc.)
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        foreach (self::$users as $user) {
-            if ($user['accessToken'] === $token) {
-                return new static($user);
-            }
+        // TODO: Implement findIdentityByAccessToken() method.
+        $user = User::find()->where(['accessToken'=>$token])->one();
+        if (count($user)){
+            return new static($user);
         }
-
-        return null;
     }
 
     /**
-     * Finds user by username
-     *
-     * @param string $username
-     * @return static|null
-     */
-    public static function findByUsername($username)
-    {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
+     * Returns an ID that can uniquely identify a user identity.
+     * @return string|int an ID that uniquely identifies a user identity.
      */
     public function getId()
     {
-        return $this->id;
+        // TODO: Implement getId() method.
+        return $this->nip;
+    }
+
+    public function getRole()
+    {
+        // TODO: Implement getId() method.
+        return current( \Yii::$app->authManager->getRolesByUser( $this->id ) );
     }
 
     /**
-     * {@inheritdoc}
+     * Returns a key that can be used to check the validity of a given identity ID.
+     *
+     * The key should be unique for each individual user, and should be persistent
+     * so that it can be used to check the validity of the user identity.
+     *
+     * The space of such keys should be big enough to defeat potential identity attacks.
+     *
+     * This is required if [[User::enableAutoLogin]] is enabled.
+     * @return string a key that is used to check the validity of a given identity ID.
+     * @see validateAuthKey()
      */
     public function getAuthKey()
     {
+        // TODO: Implement getAuthKey() method.
         return $this->authKey;
     }
 
     /**
-     * {@inheritdoc}
+     * Validates the given auth key.
+     *
+     * This is required if [[User::enableAutoLogin]] is enabled.
+     * @param string $authKey the given auth key
+     * @return bool whether the given auth key is valid.
+     * @see getAuthKey()
      */
     public function validateAuthKey($authKey)
     {
+        // TODO: Implement validateAuthKey() method.
         return $this->authKey === $authKey;
     }
 
-    /**
-     * Validates password
-     *
-     * @param string $password password to validate
-     * @return bool if password provided is valid for current user
-     */
-    public function validatePassword($password)
+    public function isStudent($username)
     {
-        return $this->password === $password;
+        if ($user = User::findOne(['username' => $username, 'role' => self::ROLE_MURID]))
+        {
+            return true;
+            return $this->role == self::ROLE_MURID;
+        }
+        else
+        {
+            return false;
+        }
+
     }
+
+    public function findByNip($nip){
+
+        $user = User::find()->where(['nip'=>$nip])->one();
+        if (count($user)){
+            return new static($user);
+        }
+
+        return null;
+    }
+
+
 }
+

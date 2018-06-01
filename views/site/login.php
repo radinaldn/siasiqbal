@@ -11,37 +11,62 @@ $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out the following fields to login:</p>
 
-    <?php $form = ActiveForm::begin([
-        'id' => 'login-form',
-        'layout' => 'horizontal',
-        'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
-            'labelOptions' => ['class' => 'col-lg-1 control-label'],
-        ],
-    ]); ?>
-
-        <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
-
-        <?= $form->field($model, 'password')->passwordInput() ?>
-
-        <?= $form->field($model, 'rememberMe')->checkbox([
-            'template' => "<div class=\"col-lg-offset-1 col-lg-3\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
-        ]) ?>
-
-        <div class="form-group">
-            <div class="col-lg-offset-1 col-lg-11">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-            </div>
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="../../index2.html"><b>Siasy</b>IQBAL</a>
         </div>
+        <!-- /.login-logo -->
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">Asalamualaikum, silahkan login</p>
 
-    <?php ActiveForm::end(); ?>
+                <form action="../../index2.html" method="post">
+                    <div class="form-group has-feedback">
+                        <input type="email" class="form-control" placeholder="Email">
+                        <span class="fa fa-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input type="password" class="form-control" placeholder="Password">
+                        <span class="fa fa-lock form-control-feedback"></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="checkbox icheck">
+                                <label>
+                                    <input type="checkbox"> Remember Me
+                                </label>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
 
-    <div class="col-lg-offset-1" style="color:#999;">
-        You may login with <strong>admin/admin</strong> or <strong>demo/demo</strong>.<br>
-        To modify the username/password, please check out the code <code>app\models\User::$users</code>.
+<!--                <div class="social-auth-links text-center mb-3">-->
+<!--                    <p>- OR -</p>-->
+<!--                    <a href="#" class="btn btn-block btn-primary">-->
+<!--                        <i class="fa fa-facebook mr-2"></i> Sign in using Facebook-->
+<!--                    </a>-->
+<!--                    <a href="#" class="btn btn-block btn-danger">-->
+<!--                        <i class="fa fa-google-plus mr-2"></i> Sign in using Google+-->
+<!--                    </a>-->
+<!--                </div>-->
+                <!-- /.social-auth-links -->
+
+                <p class="mb-1">
+                    <a href="#">I forgot my password</a>
+                </p>
+                <p class="mb-0">
+                    <a href="register.html" class="text-center">Register a new membership</a>
+                </p>
+            </div>
+            <!-- /.login-card-body -->
+        </div>
     </div>
-</div>
+    <!-- /.login-box --
+    </div>
